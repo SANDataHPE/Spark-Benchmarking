@@ -1,0 +1,35 @@
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: spark-benchmark
+  namespace: t01
+spec:
+  sparkConf:
+    spark.mapr.user.secret: mapr-user-secret-4082738312
+
+  type: Java
+  sparkVersion: 2.4.5
+  mode: cluster
+  image: gcr.io/mapr-252711/spark-2.4.5:202010301117C
+  imagePullPolicy: Always
+  mainApplicationFile: "maprfs:///exthcp/tenant-5/fsmount/repo/data/run.py"
+  restartPolicy:
+    type: Never
+  arguments:
+    - 20000 20000
+  imagePullSecrets:
+    - imagepull
+  driver:
+    cores: 1
+    coreLimit: "1000m"
+    memory: "512m"
+    labels:
+      version: 2.4.5
+
+  executor:
+    cores: 1
+    coreLimit: "1000m"
+    instances: 2
+    memory: "512m"
+    labels:
+      version: 2.4.5
