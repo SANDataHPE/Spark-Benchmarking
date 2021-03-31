@@ -1,3 +1,4 @@
+import random
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StringType, StructField, StructType
 import time
@@ -27,7 +28,7 @@ def generate_df_with_n_rows(rows):
     # TODO: Improve this method to generate more distributed datsets
     return spark.createDataFrame(
         [
-            [i] for i in range(rows)
+            [random.randint(1, 10)] for row in range(rows)
         ],
         StructType([StructField("a", StringType(), True)])
     )
@@ -35,7 +36,7 @@ def generate_df_with_n_rows(rows):
 
 @time_it
 def perform_inner_join(df_one, df_two, key_to_join_on):
-    df_one.join(df_two, on=[key_to_join_on])
+    df_one.join(df_two, on=[key_to_join_on]).show()
 
 
 def configure_argparse():
