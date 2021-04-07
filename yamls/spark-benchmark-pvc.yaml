@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: copy-files-to-pv-pod
+spec:
+  containers:
+  - name: alpine
+    image: alpine:latest
+    command: ['sleep', 'infinity']
+    volumeMounts:
+    - name: spark-benchmark-pv
+      mountPath: /spark-benchmark-mount
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "64Mi"
+  volumes:
+  - name: spark-benchmark-pv
+    persistentVolumeClaim:
+      claimName: spark-benchmark-claim
