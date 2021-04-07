@@ -5,7 +5,7 @@ metadata:
   namespace: t01
 spec:
   sparkConf:
-    spark.mapr.user.secret: mapr-user-secret-4082738312
+    spark.mapr.user.secret: jenkins-secret
 
   type: Java
   sparkVersion: 2.4.5

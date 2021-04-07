@@ -25,7 +25,6 @@ def time_it(func):
 
 
 def generate_df_with_n_rows(rows):
-    # TODO: Improve this method to generate more distributed datsets
     return spark.createDataFrame(
         [
             [random.randint(1, 10)] for row in range(rows)
