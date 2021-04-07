@@ -32,8 +32,8 @@ spec:
     labels:
       version: 2.4.5
     volumeMounts:
-    - mountPath: /spark-benchmark-mount
-      name: spark-benchmark-pv
+    - name: spark-benchmark-pv
+      mountPath: /spark-benchmark-mount
 
   executor:
     cores: 1
