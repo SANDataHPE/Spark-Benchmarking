@@ -1,16 +1,20 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: dataaccess
+    name: spark-benchmark-temp-pod
 spec:
     containers:
     - name: alpine
       image: alpine:latest
       command: ['sleep', 'infinity']
       volumeMounts:
-      - name: mypvc
+      - name: spark-benchmark-pv
         mountPath: /spark-benchmark-mount
+      resources:
+        limits:
+          cpu: "250m"
+          memory: "64Mi"
     volumes:
-    - name: mypvc
+    - name: spark-benchmark-pv
       persistentVolumeClaim:
         claimName: spark-benchmark-claim
