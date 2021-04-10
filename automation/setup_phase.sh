@@ -13,33 +13,29 @@ wait $!
 # Unzipping main.zip
 unzip main.zip &
 wait $!
-cd Spark-Benchmarking-main/yamls
-
 sleep 2
 
 # Creating a PVC
 printf "\n\n\n\nCREATING PVC\n\n\n\n\n"
-kubectl apply -f spark-benchmark-pvc.yaml -n $namespace &
+kubectl apply -f /root/Spark-Benchmarking-main/yamls/spark-benchmark-pvc.yaml -n $namespace &
 wait $!
 sleep 15
 
 
 # Creating a temp pod
 printf "\n\n\n\nCREATING TEMP POD\n\n\n\n"
-kubectl apply -f spark-benchmark-temp-pod.yaml -n $namespace &
+kubectl apply -f /root/Spark-Benchmarking-main/yamls/spark-benchmark-temp-pod.yaml -n $namespace &
 wait $!
 sleep 15
 
 # Copying join_table.py to PVC
 printf "\n\n\n\nCOPYING SCRIPTS TO PVC\n\n\n\n"
-echo "kubectl cp /root/Spark-Benchmarking-main/join_table.py t01/spark-benchmark-temp-pod:/spark-benchmark-mount/"
-kubectl cp /root/Spark-Benchmarking-main/join_table.py  t01/spark-benchmark-temp-pod:/spark-benchmark-mount/ &
+kubectl cp /root/Spark-Benchmarking-main/scripts/join_table.py  t01/spark-benchmark-temp-pod:/spark-benchmark-mount/ &
+kubectl cp /root/Spark-Benchmarking-main/scripts/terragen.py t01/spark-benchmark-temp-pod:/spark-benchmark-mount/ &
 wait $!
 sleep 12
 
-exit 0
-
 # Delete utility pod
 printf "\n\n\n\nDELETING UTILITY POD\n\n\n\n"
-kubectl delete -f spark-benchmark-temp-pod.yaml -n $namespace &
+kubectl delete -f /root/Spark-Benchmarking-main/yamls/spark-benchmark-temp-pod.yaml -n $namespace &
 wait $!
