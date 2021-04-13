@@ -16,7 +16,7 @@ spec:
   restartPolicy:
     type: Never
   arguments:
-  - 20000
+  - "{{NUMBER_OF_ROWS_TO_GENERATE}}"
   imagePullSecrets:
   - imagepull
 
@@ -26,7 +26,7 @@ spec:
       claimName: spark-benchmark-claim
 
   driver:
-    cores: 1
+    cores: {{DRIVER_NUMBER_OF_CORES}}
     coreLimit: "1000m"
     memory: "512m"
     labels:
@@ -36,9 +36,9 @@ spec:
       mountPath: /spark-benchmark-mount
 
   executor:
-    cores: 1
+    cores: {{EXECUTOR_NUMBER_OF_CORES}}
     coreLimit: "1000m"
-    instances: 3
+    instances: "{{NUMBER_OF_EXECUTOR_INSTANCES}}"
     memory: "512m"
     labels:
       version: 2.4.5

@@ -3,19 +3,29 @@ from uuid import uuid4
 import random
 from argparse import ArgumentParser
 import os
+from utility import time_it
 
-def perform_sort():
-    rdd_ = spark.sparkContext.textFile("file:///spark-benchmark-mount/terragen-files/*")
-    print(f"the number of partitions in rdd {rdd_.getNumPartitions()}")
-    print(f"RDD is: {rdd_.collect()}")
-    print("\n\n\n\n\n")
+
+@time_it
+def perform_sort(rdd_):
     sorted_rdd = rdd_.sortBy(lambda element: int(element))
-    print(f"the number of partitions in sorted rdd is {sorted_rdd.getNumPartitions()}")
-    print(f"RDD is: {sorted_rdd_.collect()}")
+
+
+@time_it
+def perform_optimized_aggregation(rdd_):
+    rdd_.map(lambda random_number: (random_number, 1)).reduceByKey(lambda x, y: (x + y))
+
+
+@time_it
+def perform_unoptimized_aggregation(rdd_):
+    rdd_.map(lambda random_number: (random_number, 1)).groupByKey().map(lambda x, y: (x + y))
 
 
 def main():
-    perform_sort()
+    rdd_ = spark.sparkContext.textFile("file:///spark-benchmark-mount/terragen-files/*")
+    perform_sort(rdd_)
+    perform_optimized_aggregation(rdd_)
+    perform_unoptimized_aggregation(rdd_)
 
 
 if __name__ == '__main__':
