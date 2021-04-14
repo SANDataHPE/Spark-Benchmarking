@@ -1,14 +1,5 @@
 namespace=$1
 
-# Deleting the code base in case it exists
-printf "\n\n\n\nDELETING DIRECTORIES \n\n\n\n\n"
-rm -rf Spark-Benchmarking
-
-# Copy files phase
-printf "\n\n\n\nCOPYING REPO TO PWD\n\n\n\n\n"
-git clone --single-branch --branch main https://github.com/sandatasystem/Spark-Benchmarking.git
-wait $!
-
 # Creating a PVC
 printf "\n\n\n\nCREATING PVC\n\n\n\n\n"
 export STORAGE_CLASS_NAME="df01"
