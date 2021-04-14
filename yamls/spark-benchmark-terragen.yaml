@@ -38,7 +38,7 @@ spec:
   executor:
     cores: {{EXECUTOR_NUMBER_OF_CORES}}
     coreLimit: "1000m"
-    instances: "{{NUMBER_OF_EXECUTOR_INSTANCES}}"
+    instances: {{NUMBER_OF_EXECUTOR_INSTANCES}}
     memory: "512m"
     labels:
       version: 2.4.5
